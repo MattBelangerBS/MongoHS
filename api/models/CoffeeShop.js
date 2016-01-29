@@ -2,24 +2,46 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // Create a schema.
-var coffeeShopSchema = new Schema({
-                        name: String,
-                        address: { 
-                          type: String, 
-                          required: true, 
-                          unique: true 
-                        },
-                        rating: {
-                          type: Number,
-                          max: 5,
-                          min: 0
-                        },
-                        created_at: Date,
-                        updated_at: Date
-                      });
+// var coffeeShopSchema = new Schema({
+//                         name: String,
+//                         address: { 
+//                           type: String, 
+//                           required: true, 
+//                           unique: true 
+//                         },
+//                         rating: {
+//                           type: Number,
+//                           max: 5,
+//                           min: 0
+//                         },
+//                         created_at: Date,
+//                         updated_at: Date
+//                       });
 
+var HSDatabaseSchema = new Schema({
+            id:String,
+            name:String,
+            text:String,
+            rarity:String,
+            type:String,
+            cost:Number,
+            attack:Number,
+            health:Number,
+            collectible:Boolean,
+            faction:String,
+            flavor:String,
+            mechanics:Array,
+            dust:Array,
+            race:String,
+            set:String,
+            artist:String,
+            playerClass:String,
+            created_at: Date,
+            updated_at: Date
 
-coffeeShopSchema.pre('save', function(next) {
+});
+
+HSDatabaseSchema.pre('save', function(next) {
     // Get the current date.
     var currentDate = new Date();
 
