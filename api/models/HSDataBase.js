@@ -1,40 +1,21 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// Create a schema.
-// var coffeeShopSchema = new Schema({
-//                         name: String,
-//                         address: { 
-//                           type: String, 
-//                           required: true, 
-//                           unique: true 
-//                         },
-//                         rating: {
-//                           type: Number,
-//                           max: 5,
-//                           min: 0
-//                         },
-//                         created_at: Date,
-//                         updated_at: Date
-//                       });
 
 var HSDatabaseSchema = new Schema({
-            id:String,
+            id:Number,
             name:String,
-            text:String,
-            rarity:String,
-            type:String,
-            cost:Number,
+            description:String,
+            quality:String,
+            category:String,
+            mana:Number,
             attack:Number,
             health:Number,
             collectible:Boolean,
-            faction:String,
-            flavor:String,
-            mechanics:Array,
-            dust:Array,
+            image_url:String,
+            effect_list:String,
             race:String,
-            artist:String,
-            playerClass:String,
+            hero:String,
             created_at: Date,
             updated_at: Date
 
@@ -55,13 +36,6 @@ HSDatabaseSchema.pre('save', function(next) {
     // Continue.
     next();
 });
-
-
-// HSDatabaseSchema.methods.summary = function() {
-//     // Construct and return summary.
-//     var summary = this.name + "\n" + this.address + "\nRating: " + this.rating; 
-//     return summary;
-// };
 
 
 // Create a model using schema.
