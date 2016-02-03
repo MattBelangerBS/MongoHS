@@ -21,4 +21,3 @@ MainCtrl.prototype.clearStorage = function() {
 };
 
 
-
