@@ -8,12 +8,12 @@ var app = express();
 
 //routes
 var cards     = require('./routes/cards.rts');
-var images      = require('./routes/images.rts');
+var decks      = require('./routes/decks.rts');
 
 
 //config app routes
 app.use('/cards',cards);
-app.use('/images',images);
+app.use('/decks',decks);
 
 
 app.use(express.static(__dirname + './../app/'));

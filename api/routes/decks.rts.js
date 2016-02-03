@@ -1,5 +1,5 @@
 //Dependency
-var HSDataBase = require('../models/HSDataBase');
+var HSDecks = require('../models/HSDecks');
 var request = require('request');
 var fs = require('fs');
 var express = require('express');
