@@ -8,7 +8,7 @@ var Cards = React.createClass({
     render: function(){
         var that = this;
         var cardNodes = this.props.data.map(function(card,index){
-                    if(!(card.category=="hero") && !(card.collectible==false)){
+                    if(!(card.health=="30") && !(card.collectible==false)){
                         return(
                             <li onClick={that.handleClick.bind(null, card)} key={index}> 
                                 {card.name} 
