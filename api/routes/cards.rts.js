@@ -22,7 +22,11 @@ router.get('/getNewCards',function(req,res){
 
 
 router.get('/cards',function(req,res){
-        HS_ctrl.getCards();
+        HS_ctrl.getCards().then(function(data) {
+            console.log(data);
+            res.json(data);
+            
+        });
 });
 
 router.get('/dropall',function(req,res){

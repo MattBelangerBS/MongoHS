@@ -1,5 +1,6 @@
 //Database
 var HSDataBase = require('./HSDataBase');
+var q = require('q');
 var fs = require('fs'),
 	request = require('request');
 
@@ -48,14 +49,17 @@ function getCardImage (image){
 }
 
 function getCards(){
+    var deferred = q.defer();
+    
 	HSDataBase.find({}, function(err, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log(res);
-            return res;
+            //console.log(res);
+            deferred.resolve(res);
         }
     });
+     return deferred.promise;
 };
 
 
