@@ -75,3 +75,11 @@ ul {
     width: 200px;
     height: 303px;
 }
+
+.spell{
+    background-color: yellow;
+}
+.minion{
+    background-color: green;
+}
+
