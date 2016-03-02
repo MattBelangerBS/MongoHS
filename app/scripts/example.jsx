@@ -1,10 +1,11 @@
 
-var Cards = React.createClass({
+var Header = React.createClass({
     getInitialState: function(){
             return {
                     details: [], 
                     filter: '',
-                    hero:'all'
+                    hero:'all',
+                    sort:'mana'
                     };
     },
     handleClick: function(card) {
@@ -13,6 +14,39 @@ var Cards = React.createClass({
     },
     handleFilterChange: function(e) {
     	    this.setState({filter: e.target.value});
+    },
+    handleSortChange: function(e) {
+    	    this.setState({sort: e.target.value});
+            var sortField = e.target.value;
+            if(sortField==='alph'){
+                console.log('alph')
+                this.props.data.sort(function(a, b){
+                            if(a.name < b.name) return -1;
+                            if(a.name > b.name) return 1;
+                            return 0;
+                        });
+            }else if(sortField==='mana'){
+                console.log('mana')
+                this.props.data.sort(function(a, b){
+                            if(a.mana < b.mana) return -1;
+                            if(a.mana > b.mana) return 1;
+                            return 0;
+                        });
+            }else if(sortField==='attack'){
+                console.log('attack')
+                this.props.data.sort(function(a, b){
+                            if(a.attack < b.attack) return 1;
+                            if(a.attack > b.attack) return -1;
+                            return 0;
+                        });
+            }else if(sortField==='health'){
+                console.log('health')
+                this.props.data.sort(function(a, b){
+                            if(a.health < b.health) return 1;
+                            if(a.health > b.health) return -1;
+                            return 0;
+                        });
+            }
     },
     handleFilterClick: function(hero) {
     	    this.setState({hero: hero});
@@ -32,6 +66,12 @@ var Cards = React.createClass({
                                 onChange={this.handleFilterChange}
                             />
                         </label>
+                        <select onChange={this.handleSortChange} value={this.state.sort}>
+                            <option value="mana">Mana Cost</option>
+                            <option value="alph">Alpha</option>
+                            <option value="health">Health</option>
+                            <option value="attack">Attack</option>
+                        </select>
                         <div>
                             {heroes.map(function(hero,index){
                                 return(
@@ -42,9 +82,10 @@ var Cards = React.createClass({
                             })}
                         </div>
                     </div>
+                    
                     <div className="left">
                         <div className="row">
-                            <div className="col-md-8">
+                            <div className="col-md-9">
                                 <div className="row">
                             {this.props.data.map(function(card,index){
                                 var cardClass = 'default';
@@ -63,20 +104,19 @@ var Cards = React.createClass({
                                         (that.state.hero===card.hero)
                                         )){
                                             return (
-                                                <div className="col-md-2 card" key={index}>
+                                                <div className="col-md-3" key={index}>
                                                     <div onClick={that.handleClick.bind(null, card)} > 
-                                                        {card.name} 
+                                                        <img className="img_box" src={card.image_url}/>
                                                     </div>
                                                 </div>
                                             )
                                         } 
-                                    
                                 }
                             })}
                                 </div>
                             </div>
                             
-                             <div className="col-md-4">
+                             <div className="col-md-3">
                                 <CardDetails data={this.state.details}/>
                             </div>
                         </div>
@@ -87,21 +127,33 @@ var Cards = React.createClass({
     }
 });
 
+var CardList = React.createClass({
+    render: function(){
+        return(
+            <div></div>
+        )
+    }
+});
+
 var CardDetails = React.createClass({
     render: function(){
         var name = this.props.data.name;
         var description = this.props.data.description;
         var img = this.props.data.image_url;
-        
-        return(
-            <div className="right col-md-4">
-                <h2>{name}</h2>
-                <span className="deets"> Category: {this.props.data.category}</span>
-                <span> Class: {this.props.data.hero}</span>
-                <span> Quality: {this.props.data.quality}</span>
-                <img className="img_box" src={img}/>
-            </div>
-        )
+        if(this.props.data.name){
+            return(
+                <div className="right col-md-4">
+                    <h2>{name}</h2>
+                    <p className="deets"> Category: {this.props.data.category}</p>
+                    <p> Class: {this.props.data.hero}</p>
+                    <p> Quality: {this.props.data.quality}</p>
+                </div>
+            )
+        } else{
+            return(
+                <div></div>
+            )
+        }
     }
 });
 
@@ -113,6 +165,11 @@ var MyTable = React.createClass({
                 cache: false,
                 success: function(data) {
                     console.log(data);
+                    data.sort(function(a, b){
+                        if(a.mana < b.mana) return -1;
+                        if(a.mana > b.mana) return 1;
+                        return 0;
+                    })
                     this.setState({data: data});
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -129,8 +186,8 @@ var MyTable = React.createClass({
     render: function() {
         return (
             <div className="container">
-                <h2>CardList</h2>
-                <Cards data={this.state.data}/>
+                <h2>Hearthstone Card Resource</h2>
+                <Header data={this.state.data}/>
             </div>
         );
     }
