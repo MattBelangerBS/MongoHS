@@ -85,34 +85,10 @@ var Header = React.createClass({
                     
                     <div className="left">
                         <div className="row">
+                        
                             <div className="col-md-9">
                                 <div className="row">
-                            {this.props.data.map(function(card,index){
-                                var cardClass = 'default';
-                                if(!(card.health=="30") && !(card.collectible==false) && card.category !=='ability'){
-                                    
-                                    var stringName = card.name;
-                                    var stringCat = card.category;
-                                    var stringQual = card.quality;
-                                    var stringRace = card.race;
-                                    var stringDes = card.description;
-                                    
-                                    var search = (that.state.filter).toLowerCase();
-                                    
-                                        if ((stringName.toLowerCase().indexOf(search) != -1)&&                 
-                                        ((that.state.hero==='all') || 
-                                        (that.state.hero===card.hero)
-                                        )){
-                                            return (
-                                                <div className="col-md-3" key={index}>
-                                                    <div onClick={that.handleClick.bind(null, card)} > 
-                                                        <img className="img_box" src={card.image_url}/>
-                                                    </div>
-                                                </div>
-                                            )
-                                        } 
-                                }
-                            })}
+                                    <CardList onUpdate={this.handleClick} data={this.props.data} filter={this.state.filter} hero={this.state.hero}/>
                                 </div>
                             </div>
                             
@@ -129,8 +105,36 @@ var Header = React.createClass({
 
 var CardList = React.createClass({
     render: function(){
+        var that = this;
         return(
-            <div></div>
+            <div>
+                {this.props.data.map(function(card,index){
+                    var cardClass = 'default';
+                    if(!(card.health=="30") && !(card.collectible==false) && card.category !=='ability'){
+                        
+                        var stringName = card.name;
+                        var stringCat = card.category;
+                        var stringQual = card.quality;
+                        var stringRace = card.race;
+                        var stringDes = card.description;
+                        
+                        var search = (that.props.filter).toLowerCase();
+                        
+                            if ((stringName.toLowerCase().indexOf(search) != -1)&&                 
+                            ((that.props.hero==='all') || 
+                            (that.props.hero===card.hero)
+                            )){
+                                return (
+                                    <div className="col-md-3" key={index}>
+                                        <div onClick={that.props.onUpdate.bind(null, card)} > 
+                                            <img className="img_box" src={card.image_url}/>
+                                        </div>
+                                    </div>
+                                )
+                            } 
+                    }
+                })}
+            </div>
         )
     }
 });
