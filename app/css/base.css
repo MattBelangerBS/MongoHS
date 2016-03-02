@@ -61,25 +61,36 @@ ul {
   padding-left: 30px;
 }
 
-.right{
+/*.right{
     display: inline-block;
     float:right;
-}
-.left{
+}*/
+/*.left{
     display: inline-block;
-    float:left;
+    margin-top: 5px;
     
-}
+}*/
 
 .img_box{
     width: 200px;
     height: 303px;
 }
 
-.spell{
-    background-color: yellow;
+.card{
+    height:50px;
+    width:100px;
+    overflow:hidden;
+    margin:1px;
 }
-.minion{
-    background-color: green;
+.card:hover{
+    cursor: pointer;
+    background-color: #FDFFF8;
+}
+.btn{
+    margin:2px;
+    width:75px;
 }
 
+.container{
+    padding-left:0;
+}

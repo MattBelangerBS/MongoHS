@@ -23,7 +23,7 @@ var Cards = React.createClass({
             var heroes = ['all','neutral','druid','mage','rogue','priest','warrior','hunter','paladin','shaman','warlock']               
             return(
                 <div>
-                    <div className='filters'>
+                    <div className='container filters'>
                         <label> Search Cards By Name
                             <input 
                                 type="text" 
@@ -32,43 +32,56 @@ var Cards = React.createClass({
                                 onChange={this.handleFilterChange}
                             />
                         </label>
-                        <ul>
+                        <div>
                             {heroes.map(function(hero,index){
                                 return(
-                                    <li onClick={that.handleFilterClick.bind(null, hero)} key={index}>
+                                    <span className="btn btn-primary" onClick={that.handleFilterClick.bind(null, hero)} key={index}>
                                         {hero}
-                                    </li>
+                                    </span>
                                 )
                             })}
-                        </ul>
+                        </div>
                     </div>
                     <div className="left">
-                        <ul>
+                        <div className="row">
+                            <div className="col-md-8">
+                                <div className="row">
                             {this.props.data.map(function(card,index){
                                 var cardClass = 'default';
                                 if(!(card.health=="30") && !(card.collectible==false) && card.category !=='ability'){
                                     
-                                    if (card.category === 'minion'){
-                                        cardClass = 'minion'
-                                    }else if(card.category==='spell'){
-                                        cardClass = 'spell'
-                                    }
-                                    var string = card.name;
+                                    var stringName = card.name;
+                                    var stringCat = card.category;
+                                    var stringQual = card.quality;
+                                    var stringRace = card.race;
+                                    var stringDes = card.description;
+                                    
                                     var search = (that.state.filter).toLowerCase();
                                     
-                                        if ((string.toLowerCase().indexOf(search) != -1)&&((that.state.hero==='all') || (that.state.hero===card.hero))){
+                                        if ((stringName.toLowerCase().indexOf(search) != -1)&&                 
+                                        ((that.state.hero==='all') || 
+                                        (that.state.hero===card.hero)
+                                        )){
                                             return (
-                                                <li className={cardClass} onClick={that.handleClick.bind(null, card)} key={index}> 
-                                                    {card.name} 
-                                                </li>
+                                                <div className="col-md-2 card" key={index}>
+                                                    <div onClick={that.handleClick.bind(null, card)} > 
+                                                        {card.name} 
+                                                    </div>
+                                                </div>
                                             )
                                         } 
                                     
                                 }
                             })}
-                        </ul>
+                                </div>
+                            </div>
+                            
+                             <div className="col-md-4">
+                                <CardDetails data={this.state.details}/>
+                            </div>
+                        </div>
                     </div>
-                    <CardDetails data={this.state.details}/>
+                   
                 </div>
             )
     }
@@ -81,9 +94,11 @@ var CardDetails = React.createClass({
         var img = this.props.data.image_url;
         
         return(
-            <div className="right">
+            <div className="right col-md-4">
                 <h2>{name}</h2>
-                <h4>{this.props.data.category}</h4>
+                <span className="deets"> Category: {this.props.data.category}</span>
+                <span> Class: {this.props.data.hero}</span>
+                <span> Quality: {this.props.data.quality}</span>
                 <img className="img_box" src={img}/>
             </div>
         )
@@ -113,7 +128,7 @@ var MyTable = React.createClass({
     },
     render: function() {
         return (
-            <div>
+            <div className="container">
                 <h2>CardList</h2>
                 <Cards data={this.state.data}/>
             </div>
