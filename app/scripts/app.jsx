@@ -56,8 +56,8 @@ var Header = React.createClass({
             var that = this;
             var heroes = ['all','neutral','druid','mage','rogue','priest','warrior','hunter','paladin','shaman','warlock']               
             return(
-                <div>
-                    <div className='container filters'>
+                <section>
+                    <section className='container filters'>
                         <label> Search Cards By Name
                             <input 
                                 type="text" 
@@ -75,30 +75,30 @@ var Header = React.createClass({
                         <div>
                             {heroes.map(function(hero,index){
                                 return(
-                                    <span className="btn btn-primary" onClick={that.handleFilterClick.bind(null, hero)} key={index}>
+                                    <span className="btn btn-info" onClick={that.handleFilterClick.bind(null, hero)} key={index}>
                                         {hero}
                                     </span>
                                 )
                             })}
                         </div>
-                    </div>
+                    </section>
                     
-                    <div className="left">
+                    <section className="left">
                         <div className="row">
                         
-                            <div className="col-md-9">
+                            <section className="col-xs-6 col-sm-6 col-md-9">
                                 <div className="row">
                                     <CardList onUpdate={this.handleClick} data={this.props.data} filter={this.state.filter} hero={this.state.hero}/>
                                 </div>
-                            </div>
+                            </section>
                             
-                             <div className="col-md-3">
+                             <section className="col-xs-6 col-sm-6 col-md-3">
                                 <CardDetails data={this.state.details}/>
-                            </div>
+                            </section>
                         </div>
-                    </div>
-                   
-                </div>
+                    </section>
+ 
+                </section>
             )
     }
 });
@@ -125,7 +125,7 @@ var CardList = React.createClass({
                             (that.props.hero===card.hero)
                             )){
                                 return (
-                                    <div className="col-md-3" key={index}>
+                                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3" key={index}>
                                         <div onClick={that.props.onUpdate.bind(null, card)} > 
                                             <img className="img_box" src={card.image_url}/>
                                         </div>
@@ -146,7 +146,7 @@ var CardDetails = React.createClass({
         var img = this.props.data.image_url;
         if(this.props.data.name){
             return(
-                <div className="right col-md-4">
+                <div className="right col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <h2>{name}</h2>
                     <p className="deets"> Category: {this.props.data.category}</p>
                     <p> Class: {this.props.data.hero}</p>
@@ -187,12 +187,14 @@ var MyTable = React.createClass({
     componentDidMount: function(){
         this.loadCardsFromServer();
     },
+    
+    
     render: function() {
         return (
-            <div className="container">
+            <article className="container">
                 <h2>Hearthstone Card Resource</h2>
                 <Header data={this.state.data}/>
-            </div>
+            </article>
         );
     }
 });

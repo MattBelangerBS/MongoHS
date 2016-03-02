@@ -1,0 +1,49 @@
+@import "elements.less";
+@backColor-base: #fff;
+@font-family-base: "Helvetica Neue", Helvetica, Arial, sans-serif;
+@width:100px;
+@height:100px;
+
+body {
+  background: @backColor-base;
+  font-family: @font-family-base;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+  padding: 30px;
+}
+
+.img_box{
+    width: @width*2;
+    height: @height*3;
+}
+
+.card{
+    height:@height/2;
+    width:@width;
+    margin: 1px;
+    &:hover{
+        cursor: pointer;
+        background-color: #FDFFF8;
+    }
+}
+
+@marginLeft: ~"input,select";
+
+@{marginLeft} {
+  margin-left:5px;
+}
+
+.container{
+    padding-left:0;
+}
+
+.btn-info{
+    margin:2px;
+    width:75px;
+    &:hover{
+        .transition(0.5s, ease-out);
+    }
+    
+}
+
