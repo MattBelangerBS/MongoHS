@@ -18,28 +18,28 @@ var Header = React.createClass({
     handleSortChange: function(e) {
     	    this.setState({sort: e.target.value});
             var sortField = e.target.value;
-            if(sortField==='alph'){
+            if (sortField==='alph') {
                 console.log('alph')
                 this.props.data.sort(function(a, b){
                             if(a.name < b.name) return -1;
                             if(a.name > b.name) return 1;
                             return 0;
                         });
-            }else if(sortField==='mana'){
+            } else if (sortField==='mana') {
                 console.log('mana')
                 this.props.data.sort(function(a, b){
                             if(a.mana < b.mana) return -1;
                             if(a.mana > b.mana) return 1;
                             return 0;
                         });
-            }else if(sortField==='attack'){
+            } else if (sortField==='attack') {
                 console.log('attack')
                 this.props.data.sort(function(a, b){
                             if(a.attack < b.attack) return 1;
                             if(a.attack > b.attack) return -1;
                             return 0;
                         });
-            }else if(sortField==='health'){
+            } else if (sortField==='health') {
                 console.log('health')
                 this.props.data.sort(function(a, b){
                             if(a.health < b.health) return 1;
@@ -52,10 +52,10 @@ var Header = React.createClass({
     	    this.setState({hero: hero});
             console.log(hero);
     },
-    render: function(){
+    render: function() {
             var that = this;
-            var heroes = ['all','neutral','druid','mage','rogue','priest','warrior','hunter','paladin','shaman','warlock']               
-            return(
+            var heroes = ['all','neutral','druid','mage','rogue','priest','warrior','hunter','paladin','shaman','warlock'];             
+            return (
                 <section>
                     <section className='container filters'>
                         <label> Search Cards By Name
@@ -103,12 +103,12 @@ var Header = React.createClass({
     }
 });
 
-var CardList = React.createClass({
-    render: function(){
+var CardList = React.createClass ({
+    render: function() {
         var that = this;
-        return(
+        return (
             <div>
-                {this.props.data.map(function(card,index){
+                {this.props.data.map(function(card,index) {
                     var cardClass = 'default';
                     if(!(card.health=="30") && !(card.collectible==false) && card.category !=='ability'){
                         
@@ -118,20 +118,21 @@ var CardList = React.createClass({
                         var stringRace = card.race;
                         var stringDes = card.description;
                         
-                        var search = (that.props.filter).toLowerCase();
+                        var regex = new RegExp(that.props.filter,'i');
                         
-                            if ((stringName.toLowerCase().indexOf(search) != -1)&&                 
+                        if  (((stringName.search(regex) != -1)||(stringRace.search(regex)!= -1)||
+                                (stringQual.search(regex)!= -1))&&                 
                             ((that.props.hero==='all') || 
                             (that.props.hero===card.hero)
                             )){
-                                return (
-                                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3" key={index}>
-                                        <div onClick={that.props.onUpdate.bind(null, card)} > 
-                                            <img className="img_box" src={card.image_url}/>
-                                        </div>
+                            return (
+                                <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3" key={index}>
+                                    <div onClick={that.props.onUpdate.bind(null, card)} > 
+                                        <img className="img_box" src={card.image_url}/>
                                     </div>
-                                )
-                            } 
+                                </div>
+                            )
+                        } 
                     }
                 })}
             </div>
@@ -139,8 +140,8 @@ var CardList = React.createClass({
     }
 });
 
-var CardDetails = React.createClass({
-    render: function(){
+var CardDetails = React.createClass ({
+    render: function() {
         var name = this.props.data.name;
         var description = this.props.data.description;
         var img = this.props.data.image_url;
@@ -153,15 +154,15 @@ var CardDetails = React.createClass({
                     <p> Quality: {this.props.data.quality}</p>
                 </div>
             )
-        } else{
-            return(
+        } else {
+            return (
                 <div></div>
             )
         }
     }
 });
 
-var MyTable = React.createClass({
+var MyTable = React.createClass ({
      loadCardsFromServer: function() {
             $.ajax({
                 url: this.props.url,
@@ -181,10 +182,10 @@ var MyTable = React.createClass({
                 }.bind(this)
             });
      },
-      getInitialState: function(){
+      getInitialState: function() {
             return {data: []};
     },
-    componentDidMount: function(){
+    componentDidMount: function() {
         this.loadCardsFromServer();
     },
     
@@ -201,7 +202,7 @@ var MyTable = React.createClass({
 
 
  
-    ReactDOM.render(
+    ReactDOM.render (
         // <MyTable url="/api/json"/>,
         <MyTable  url="/cards/cards"/>,
         document.getElementById('content')
